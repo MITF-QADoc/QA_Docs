@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MITF Online Payment Ecosystem — MITF Online Payment Ecosystem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>window.SITE_ROOT='';</script>
+</head>
+<body>
+<div id="reading-progress"></div>
+<header class="site-header">
+  <div class="header-inner">
+    <button id="sidebar-toggle" aria-label="Toggle sidebar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+    <a href="index.html" class="header-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      MITF Online Payment Ecosystem
+    </a>
+    <div class="header-search">
+      <input type="text" id="search-input" placeholder="Search" autocomplete="off">
+      <span id="search-shortcut">Ctrl+K</span>
+      <div id="search-results"></div>
+    </div>
+    <div class="header-links">
+      <button id="dark-mode-toggle" aria-label="Toggle dark mode">🌙</button>
+    </div>
+  </div>
+</header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-inner">
+      <div class="nav-section"><div class="nav-section-title">Navigation</div><ul class="nav-tree"><li class="nav-item active"><a href="index.html">⌂ Home</a></li><li class="nav-item "><a href="pages/integrations-and-woocommerce.html">▸ Integrations And Woocommerce</a></li><li class="nav-item "><a href="pages/merchant-portal.html">▸ Merchant Portal</a></li><li class="nav-item "><a href="pages/online-payment-v2.html">▸ Online Payment V2</a></li></ul></div>
+    </div>
+  </nav>
+  <main class="content">
+    
+    <article class="markdown-body">
+      <h1 id="mitf-online-payment-ecosystem">MITF Online Payment Ecosystem</h1><div class="ecosystem-image"><img src="assets/Payment Eco System.png" alt="Payment Eco System Overview"><figcaption>Payment Eco System Overview</figcaption></div>
+<h2 id="platform-vision">Platform Vision</h2>
+<p>The MITF Online Payment Ecosystem replaces scattered bank-credential integrations with a <strong>unified layer</strong>: API keys, a merchant control plane, and a dual-auth payment API. External channels (WooCommerce, direct API, POS) connect through defined APIs while <strong>bank credentials stay in the portal vault</strong>. The core payment engine—OTP flows and bank adapters—remains unchanged.</p>
+<p><strong>Goal:</strong> Self-service onboarding, partner scale, and operational visibility without redesigning payments.</p>
+<hr>
+<h2 id="core-ecosystem-components">Core Ecosystem Components</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Online Payment API V2</strong></td>
+<td>Dual-auth host — JWT proxy to V1 + RESTful <code>/v2/*</code> for API-key clients</td>
+</tr>
+<tr>
+<td><strong>Legacy Core</strong></td>
+<td>Thin gRPC bank gateway (<code>Pay</code>, <code>GetBalance</code>, <code>CheckTransactionStatus</code>)</td>
+</tr>
+<tr>
+<td><strong>Merchant Portal</strong></td>
+<td>Control plane — web UI + API for identity, keys, operations, developer tools</td>
+</tr>
+<tr>
+<td><strong>WooCommerce &amp; Payment Service</strong></td>
+<td>E-commerce channel; API key only, hosted <code>/pay</code> page</td>
+</tr>
+<tr>
+<td><strong>Online Payment API V1</strong></td>
+<td>Frozen; preserved behind V2 JWT proxy</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="key-capabilities">Key Capabilities</h2>
+<ul>
+<li><strong>API keys</strong> — prefixed <code>mitf_live_*</code> / <code>mitf_test_*</code>; Argon2id at rest; portal vault for bank creds</li>
+<li><strong>Payment sessions</strong> — V2 owns OTP, settlement via Legacy Core, refunds, balance, transactions, reports</li>
+<li><strong>Control plane</strong> — idempotency, rate limits, quotas, audit; RFC 7807 errors on <code>/v2/*</code></li>
+<li><strong>Merchant portal</strong> — bills, refunds, reporting, integrations, Developer Center (docs, tester, plugin)</li>
+<li><strong>Channels</strong> — WooCommerce plugin, direct REST API, POS via portal APIs</li>
+</ul>
+<hr>
+<h2 id="business-value">Business Value</h2>
+<table>
+<thead>
+<tr>
+<th>Stakeholder</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Merchants</strong></td>
+<td>Fast onboarding, one portal, no creds in third-party systems</td>
+</tr>
+<tr>
+<td><strong>Partners</strong></td>
+<td>REST API, sandbox keys, Swagger, in-portal tester</td>
+</tr>
+<tr>
+<td><strong>Operations</strong></td>
+<td>Central key management, audit, quotas, unified reporting</td>
+</tr>
+<tr>
+<td><strong>Platform</strong></td>
+<td>Scalable dual-auth host, V1 migration path, isolated bank gateway</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="benefits-for-merchants-and-partners">Benefits for Merchants and Partners</h2>
+<p><strong>Merchants:</strong> Sandbox keys, single portal for ops and integrations, bilingual UI, guided onboarding.</p>
+<p><strong>Partners:</strong> Stable <code>/v2/*</code> contracts, legacy JWT preserved via proxy, plugin from portal, documented trust boundaries.</p>
+<hr>
+<h2 id="system-architecture-summary">System Architecture Summary</h2>
+<pre><code>Channels (WooCommerce, Direct API, POS)
+        │
+        ├──▶ Merchant Portal (Web + API) — keys, vault, ops
+        │
+        └──▶ Online Payment V2 — JWT proxy → V1  |  /v2/* → Legacy Core → Bank
+</code></pre>
+<p><strong>Principles:</strong> V2 executes new integrations; Legacy Core is the only bank gateway; portal issues and resolves keys; channels hold API keys, not bank secrets.</p>
+<hr>
+<h2 id="summary">Summary</h2>
+<p>A production-ready platform that separates control plane from payment engine, vaults credentials centrally, and serves both legacy JWT and modern API-key clients—enabling merchants and partners to connect quickly without compromising security or payment reliability.</p>
+
+    <h2>Documentation</h2><div class="home-cards"><div class="home-card"><h3><a href="pages/integrations-and-woocommerce.html">Integrations And Woocommerce</a></h3><p>Integrations And Woocommerce documentation</p></div><div class="home-card"><h3><a href="pages/merchant-portal.html">Merchant Portal</a></h3><p>Merchant Portal documentation</p></div><div class="home-card"><h3><a href="pages/online-payment-v2.html">Online Payment V2</a></h3><p>Online Payment V2 documentation</p></div></div></article>
+    <footer class="site-footer">
+      <p>© 2026 MITF · Online Payment Ecosystem</p>
+    </footer>
+  </main>
+  <nav class="toc-sidebar"><div class="toc-inner"><h3>On this page</h3><ul><li style="padding-left:0px"><a href="#mitf-online-payment-ecosystem">MITF Online Payment Ecosystem</a></li><li style="padding-left:12px"><a href="#platform-vision">Platform Vision</a></li><li style="padding-left:12px"><a href="#core-ecosystem-components">Core Ecosystem Components</a></li><li style="padding-left:12px"><a href="#key-capabilities">Key Capabilities</a></li><li style="padding-left:12px"><a href="#business-value">Business Value</a></li><li style="padding-left:12px"><a href="#benefits-for-merchants-and-partners">Benefits for Merchants and Partners</a></li><li style="padding-left:12px"><a href="#system-architecture-summary">System Architecture Summary</a></li><li style="padding-left:12px"><a href="#summary">Summary</a></li></ul></div></nav>
+</div>
+<div id="sidebar-overlay"></div>
+<script src="assets/script.js"></script>
+</body>
+</html>

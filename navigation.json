@@ -1,0 +1,30 @@
+{
+  "title": "Home",
+  "path": "index.html",
+  "children": [
+    {
+      "title": "Home",
+      "path": "index.html",
+      "children": [],
+      "isFolder": false
+    },
+    {
+      "title": "Integrations And Woocommerce",
+      "path": "pages/integrations-and-woocommerce.html",
+      "children": [],
+      "isFolder": false
+    },
+    {
+      "title": "Merchant Portal",
+      "path": "pages/merchant-portal.html",
+      "children": [],
+      "isFolder": false
+    },
+    {
+      "title": "Online Payment V2",
+      "path": "pages/online-payment-v2.html",
+      "children": [],
+      "isFolder": false
+    }
+  ]
+}
